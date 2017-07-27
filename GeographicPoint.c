@@ -8,6 +8,7 @@ int fil;
 int col;
 int **matrix(void);
 void n_aleatorios(int **matriz, int *a, int *b);
+int radio(int **matriz, int x, int y);
 
 //Main
 
@@ -15,12 +16,20 @@ void main(){
 
 fil = 500;
 col=744;
+
 int i, j ,c = 0;
-int x, y;
+
+int x0, y0; //Numeros aleatorios
+
+//define matriz de datos
 
 int **matriz= matrix(); 
-n_aleatorios(matriz, &x, &y);
-printf("%d %d\n", x, y);
+
+n_aleatorios(matriz, &x0, &y0);
+c= radio(matriz, x0, y0);
+
+printf("%d %d\n", x0, y0);
+printf("%d\n", c);
 }
 
 //Lectura de datos
@@ -73,5 +82,80 @@ void n_aleatorios(int **matriz, int *a, int *b){
 	*b=k;
 }
 
+int radio(int **matriz, int x, int y){
+
+	int i;
+	int r1;
+	int r2;
+	int r3;
+	int r4;
+	
+for (i=1;i<500;i++)
+{
+	r1=i;
+	if (matriz[x+i][y]==1)
+	{
+		break;
+			
+	}
+}
+	
+for (i=1;i<500;i++)
+{
+	r2=i;
+	if (matriz[x-i][y]==1)
+	{
+		break;
+			
+	}
+}
+	
+
+for (i=1;i<500;i++)
+{
+	r3=i;
+	if (matriz[x][y+i]==1)
+	{
+		break;
+			
+	}
+}
+
+for (i=1;i<500;i++)
+{
+	r4=i;
+	if (matriz[x][y-i]==1)
+	{
+		break;
+			
+	}
+}
+
+
+int r;
+r=0;
+	
+if (r1>r){
+
+	r=r1;
+}
+
+if (r2>r){
+
+	r=r2;
+}
+
+if (r3>r){
+
+	r=r3;
+}	
+
+if (r4>r){
+
+	r=r4;
+}
+
+return r;	
+}
 
 
