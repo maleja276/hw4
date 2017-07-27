@@ -38,7 +38,10 @@ numeros(matriz, x0, y0, &x, &y);
 
 r= radio(matriz, x, y);
 
+radio(matriz, x, y);
+
 printf("%d\n", r);
+
 
 }
 
@@ -101,7 +104,7 @@ void numeros(int **matriz, int x0, int y0, int *a, int*b){
 	int num_fil= x0 + (rand() % (fil+50)-50);
 	int num_col= y0 +(rand() % (col+50)-50);
 	
-	while(matriz[per_y(num_fil)][per_x(num_col)]==1)
+	while(matriz[per_x(num_fil)][per_y(num_col)]==1)
 	{
 		num_fil=x0 + (rand() % (fil+50)-50);
 		num_col=y0 +(rand() % (col+50)-50);	
@@ -115,103 +118,52 @@ void numeros(int **matriz, int x0, int y0, int *a, int*b){
 }
 int radio(int **matriz, int x, int y){
 
-	int i;
-	int a;
-	int r1;
-	int r2;
-	int r3;
-	int r4;
-	
-for (i=1;i<fil;i++)
-{
-	r1=i;
+int stop=0;
+int r=0;
+int i, j, k;
 
-	if (matriz[per_y(y)][per_x(x+i)]==1)
-	{
-		break;
-			
-	}
-}
-	
-for (i=1;i<fil;i++)
-{
-	r2=i;
-
-	if (matriz[per_y(y)][per_x(x-i)]==1)
-	{
-		break;
-			
-	}
-}
-	
-
-for (i=1;i<fil;i++)
-{
-	r3=i;
-
-	if (matriz[per_y(y+i)][per_x(x)]==1)
-	{
-		break;
-			
-	}
-}
-
-for (i=1;i<fil;i++)
-{
-	r4=i;
-	if (matriz[per_y(y-i)][per_x(x)]==1)
-	{
-		break;
-			
-	}
-}
-
-int r;
-r=0;
-	
-if (r1>r){
-
-	r=r1;
-}
-
-if (r2<r){
-
-	r=r2;
-}
-
-if (r3<r){
-
-	r=r3;
-}	
-
-if (r4<r){
-
-	r=r4;
-}
-
-return r;	
+for (i=1; i<fil; i++){
+	for (j=x-i; j<x+i; j++){
+		for (k=y-i; k<y+i; k++){
+			if (pow((pow(j-x,2)+pow(k-y,2)),0.5) <= i){
+				if (matriz[per_x(j)][per_y(k)]==1){
+					r=i;
+					stop=1;}
+				}
+				if (stop==1){
+					break;}
+				}
+			if(stop==1){
+				break;}
+			}
+		if(stop==1){
+			break;}
+		}
+return r;		
 }
 
 int per_x (int x){
 
 	int a=x;
-	if (x>=col){
-		a= x % col;}
+	if (x>=fil){
+		a= x % fil;}
 	
 	else if (x<0){
-		a= x+col;}
+		a= x+fil;}
 	
 return a;
 
 }
 
-int per_y (int y){	
+int per_y (int y){
+	
 	int a=y;
-	if (y>fil){
-		a= y % fil;}
+
+	if (y>=col){
+		a= y % col;}
 	
 	else if (y<0){
-		a= y+fil;}
+		a= y+col;}
 	
 return a;
 }
