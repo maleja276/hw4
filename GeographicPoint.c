@@ -21,10 +21,10 @@ void main(){
 fil = 500;
 col=744;
 
-int i, j ,r0, r= 0;
+int i, j ,r0, r, rmax= 0;
 
 int x0, y0; //Numeros aleatorios iniciales
-int x, y;
+int x, y, xmax, ymax;
 
 //define matriz de datos
 
@@ -34,15 +34,76 @@ n_aleatorios(matriz, &x0, &y0);
 
 r0= radio(matriz, x0, y0);
 
-numeros(matriz, x0, y0, &x, &y);
+rmax=r0;
 
-r= radio(matriz, x, y);
+xmax=x0;
 
-radio(matriz, x, y);
+ymax=y0;
 
-printf("%d\n", r);
+double alfa;
+float beta;
+double a;
+double b;
+int pasos;
+//numeros(matriz, x0, y0, &x, &y);
 
+//r= radio(matriz, x, y);
 
+//radio(matriz, x, y);
+
+srand( time( NULL ) );
+pasos=50;
+for(i=0; i<100; i++)
+{
+	x= (rand() % (pasos+pasos)-pasos);
+	y= (rand() % (pasos+pasos)-pasos);
+	
+	while(matriz[per_x(x)][per_y(y)]==1)
+	{
+		x=(rand() % (pasos+pasos)-pasos);
+		y=(rand() % (pasos+pasos)-pasos);	
+	}
+
+	r = radio(matriz, x, y);
+	a=r;
+	b=rmax;
+
+	alfa=(a/b);
+
+	if (a>b)
+	{
+		rmax=a;
+		xmax=x;
+		ymax=y;
+			
+	}
+	
+	
+
+	else
+	{	
+		beta=drand48();
+		if (beta<=alfa)
+		{
+			//if (rmax-r<10){
+				rmax=r;
+				xmax=x;
+				ymax=y; //}
+		}
+	
+		else
+		{
+			continue;		
+		}
+		
+	}
+	//printf("%d %d %d\n", rmax, xmax, ymax);
+}
+
+xmax=per_x(xmax);
+ymax=per_y(ymax);
+
+printf("%d %d %d\n", rmax, xmax, ymax);
 }
 
 //Lectura de datos
@@ -94,6 +155,7 @@ void n_aleatorios(int **matriz, int *a, int *b){
 	*a=j;
 	*b=k;
 }
+
 void numeros(int **matriz, int x0, int y0, int *a, int*b){  
 
 	srand(time(NULL));
@@ -101,13 +163,13 @@ void numeros(int **matriz, int x0, int y0, int *a, int*b){
 	int j=*a;
 	int k=*b;
 	
-	int num_fil= x0 + (rand() % (fil+50)-50);
-	int num_col= y0 +(rand() % (col+50)-50);
+	int num_fil= x0 + (rand() % (50+50)-50);
+	int num_col= y0 +(rand() % (50+50)-50);
 	
 	while(matriz[per_x(num_fil)][per_y(num_col)]==1)
 	{
-		num_fil=x0 + (rand() % (fil+50)-50);
-		num_col=y0 +(rand() % (col+50)-50);	
+		num_fil=x0 + (rand() % (50+50)-50);
+		num_col=y0 +(rand() % (50+50)-50);	
 	}
 	
 	j=num_fil;
@@ -118,7 +180,7 @@ void numeros(int **matriz, int x0, int y0, int *a, int*b){
 }
 int radio(int **matriz, int x, int y){
 
-int stop=0;
+int end=0;
 int r=0;
 int i, j, k;
 
@@ -128,15 +190,15 @@ for (i=1; i<fil; i++){
 			if (pow((pow(j-x,2)+pow(k-y,2)),0.5) <= i){
 				if (matriz[per_x(j)][per_y(k)]==1){
 					r=i;
-					stop=1;}
+					end=1;}
 				}
-				if (stop==1){
+				if (end==1){
 					break;}
 				}
-			if(stop==1){
+			if(end==1){
 				break;}
 			}
-		if(stop==1){
+		if(end==1){
 			break;}
 		}
 return r;		
