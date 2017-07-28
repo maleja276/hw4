@@ -45,6 +45,16 @@ float beta;
 double a;
 double b;
 int pasos;
+int r_def;
+int x_def;
+int y_def;
+r_def=r0;
+
+FILE *datos;
+
+datos=fopen("datos.txt", "w+");
+
+
 //numeros(matriz, x0, y0, &x, &y);
 
 //r= radio(matriz, x, y);
@@ -52,22 +62,30 @@ int pasos;
 //radio(matriz, x, y);
 
 srand( time( NULL ) );
-pasos=50;
-for(i=0; i<100; i++)
+pasos=25;
+for(i=0; i<150; i++)
 {
-	x= (rand() % (pasos+pasos)-pasos);
-	y= (rand() % (pasos+pasos)-pasos);
+	
+	
+	x= xmax +(rand() % (pasos+pasos)-pasos);
+	y= ymax +(rand() % (pasos+pasos)-pasos);
 	
 	while(matriz[per_x(x)][per_y(y)]==1)
 	{
-		x=(rand() % (pasos+pasos)-pasos);
-		y=(rand() % (pasos+pasos)-pasos);	
+		x=xmax + (rand() % (pasos+pasos)-pasos);
+		y=ymax +(rand() % (pasos+pasos)-pasos);	
 	}
 
 	r = radio(matriz, x, y);
 	a=r;
 	b=rmax;
-
+	
+	if (rmax>r_def)
+	{
+		r_def=rmax;
+		x_def=xmax;
+		y_def=ymax;	
+	}
 	alfa=(a/b);
 
 	if (a>b)
@@ -85,10 +103,10 @@ for(i=0; i<100; i++)
 		beta=drand48();
 		if (beta<=alfa)
 		{
-			//if (rmax-r<10){
+			
 				rmax=r;
 				xmax=x;
-				ymax=y; //}
+				ymax=y; 
 		}
 	
 		else
@@ -100,10 +118,11 @@ for(i=0; i<100; i++)
 	//printf("%d %d %d\n", rmax, xmax, ymax);
 }
 
-xmax=per_x(xmax);
-ymax=per_y(ymax);
+x_def=per_x(x_def);
+y_def=per_y(y_def);
 
-printf("%d %d %d\n", rmax, xmax, ymax);
+fprintf(datos,"%d %d %d\n", r_def, x_def, y_def);
+
 }
 
 //Lectura de datos
