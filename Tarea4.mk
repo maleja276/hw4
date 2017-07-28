@@ -1,5 +1,5 @@
-PuntoNemo.pdf : plots.py datos.txt
-	python plots.py
+PuntoNemo.pdf : Plots.py datos.txt
+	python Plots.py
 datos.txt : a.out
 	./a.out 
 
